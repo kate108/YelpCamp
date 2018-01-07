@@ -1,4 +1,4 @@
 # YelpCamp
 
-The website can be viewed on: 
+The application can be viewed here: 
 https://secure-wildwood-39602.herokuapp.com/
