@@ -20,17 +20,23 @@ router.get("/", function(req, res){
 router.post("/", middleware.isLoggedIn, function(req, res){
 	// get data from form and add data to campgrounds array
 	var name = req.body.name;
-	var price = req.body.price;
 	var image = req.body.image;
+	var price = req.body.price;
 	var desc = req.body.description;
 	var author = {
 		id: req.user._id,
 		username: req.user.username
 	}
 	geocoder.geocode(req.body.location, function (err, data) {
-	    var lat = data.results[0].geometry.location.lat;
-	    var lng = data.results[0].geometry.location.lng;
-	    var location = data.results[0].formatted_address;
+		if(req.body.location.length > 0){
+			var lat = data.results[0].geometry.location.lat;
+		    var lng = data.results[0].geometry.location.lng;
+		    var location = data.results[0].formatted_address;
+		} else {
+			var lat = 90;
+			var lng = 0;
+			var location = "North Pole";
+		}
 		var newCampground = {name: name, price: price, image: image, description: desc, author: author};
 		// Create a new campground and save to DB
 		Campground.create(newCampground, function(err, newlyCreated){
